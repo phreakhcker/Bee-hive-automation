@@ -1,0 +1,15 @@
+[Unit]
+Description=Beehive entrance camera + pollen inference
+After=network.target beehive-ingest.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/beehive-automation
+ExecStart=/usr/bin/python3 -m pi.services.camera_entrance --config /etc/beehive/config.yaml
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

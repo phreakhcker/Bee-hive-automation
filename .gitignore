@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# Local config with secrets
+config/config.yaml
+*.local.yaml
+secrets.*
+
+# Data files
+data/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+logs/
+captures/
+recordings/
+
+# ML models & training artifacts
+pi/models/*.tflite
+pi/models/*.onnx
+pi/models/*.pt
+pi/models/*.h5
+pi/models/*.pth
+!pi/models/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Pico
+*.uf2
+
+# Runtime
+*.pid
+
+# Claude Code local settings
+.claude/

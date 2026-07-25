@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" font-family="Verdana, sans-serif">
+  <title>Bee Hive Automation — Power System Wiring</title>
+  <desc>Detailed solar / BMS / battery / buck wiring for the salvaged-cell system.</desc>
+
+  <defs>
+    <style>
+      .wireLabel  { fill: #f4e6c8; font-size: 12px; }
+      .wireLabelB { fill: #f4e6c8; font-size: 13px; font-weight: bold; }
+      .compLabel  { fill: #f4e6c8; font-size: 15px; font-weight: bold; }
+      .subLabel   { fill: #a08b6b; font-size: 11px; }
+      .title      { fill: #f0b429; font-size: 22px; font-weight: bold; }
+      .sect       { fill: #f0b429; font-size: 14px; font-weight: bold; }
+      .warn       { fill: #e05b5b; font-size: 12px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="1000" fill="#1a1512"/>
+  <text x="30" y="40" class="title">🔋  Power System — Solar / Salvaged 18650 / BMS / 5 V Buck</text>
+  <text x="30" y="60" class="subLabel">Every wire in the power path.  Wire gauge and fuse ratings called out.  Read docs/safety.md first.</text>
+
+  <!-- =============== SOLAR PANEL =============== -->
+  <g transform="translate(50, 100)">
+    <rect x="0" y="0" width="220" height="120" rx="8" fill="#2a1a1a" stroke="#e05b5b" stroke-width="1.5"/>
+    <text x="110" y="26" class="compLabel" text-anchor="middle">100 W Solar Panel</text>
+    <text x="110" y="45" class="subLabel" text-anchor="middle">Renogy 100W-12V monocrystalline</text>
+    <text x="110" y="60" class="subLabel" text-anchor="middle">Voc ~22 V · Isc ~5.5 A</text>
+
+    <!-- Panel graphic -->
+    <g transform="translate(30, 70)">
+      <rect x="0" y="0" width="160" height="40" fill="#0a2a5a" stroke="#4a6a8a"/>
+      <line x1="40" y1="0" x2="40" y2="40" stroke="#4a6a8a"/>
+      <line x1="80" y1="0" x2="80" y2="40" stroke="#4a6a8a"/>
+      <line x1="120" y1="0" x2="120" y2="40" stroke="#4a6a8a"/>
+      <line x1="0" y1="20" x2="160" y2="20" stroke="#4a6a8a"/>
+    </g>
+  </g>
+  <!-- MC4 connectors -->
+  <circle cx="270" cy="140" r="5" fill="#e05b5b"/>
+  <text class="wireLabelB" x="278" y="144">+</text>
+  <circle cx="270" cy="180" r="5" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/>
+  <text class="wireLabelB" x="278" y="184">–</text>
+
+  <!-- =============== MPPT =============== -->
+  <g transform="translate(400, 100)">
+    <rect x="0" y="0" width="260" height="160" rx="8" fill="#2a1a1a" stroke="#e05b5b" stroke-width="1.5"/>
+    <text x="130" y="26" class="compLabel" text-anchor="middle">Victron SmartSolar MPPT 75/15</text>
+    <text x="130" y="45" class="subLabel" text-anchor="middle">Li-ion profile · Bluetooth</text>
+
+    <!-- Terminal labels -->
+    <g transform="translate(0, 65)">
+      <text x="20"  y="0" fill="#e05b5b" font-size="10">PV+</text>
+      <text x="20"  y="18" fill="#000" fill-opacity="1" stroke="#f4e6c8" stroke-width="0.4" font-size="10">PV–</text>
+      <text x="150" y="0" fill="#e05b5b" font-size="10">BAT+</text>
+      <text x="150" y="18" fill="#000" stroke="#f4e6c8" stroke-width="0.4" font-size="10">BAT–</text>
+      <text x="150" y="36" fill="#a08b6b" font-size="10">Temp sense</text>
+    </g>
+
+    <text x="130" y="130" class="subLabel" text-anchor="middle">Configure via VictronConnect:</text>
+    <text x="130" y="145" class="subLabel" text-anchor="middle">absorption 12.30 V · float 12.10 V · charge 8 A max</text>
+  </g>
+
+  <!-- Wires from panel to MPPT -->
+  <line x1="275" y1="140" x2="400" y2="165" stroke="#e05b5b" stroke-width="4"/>
+  <line x1="275" y1="180" x2="400" y2="183" stroke="#000000" stroke-width="4"/>
+  <text class="wireLabel" x="315" y="132">10 AWG</text>
+  <text class="wireLabel" x="315" y="204">MC4 pair</text>
+
+  <!-- =============== NTC THERMISTOR =============== -->
+  <g transform="translate(720, 100)">
+    <rect x="0" y="0" width="180" height="90" rx="6" fill="#1a221a" stroke="#a08b6b"/>
+    <text x="90" y="22" class="compLabel" text-anchor="middle">10 kΩ NTC</text>
+    <text x="90" y="40" class="subLabel" text-anchor="middle">potted probe, taped to pack</text>
+    <text x="90" y="55" class="subLabel" text-anchor="middle">→ MPPT battery-temp input</text>
+    <text x="90" y="73" class="warn" text-anchor="middle">disables charge below 5 °C</text>
+  </g>
+  <!-- Wire NTC → MPPT temp sense -->
+  <path d="M720,145 L680,145 L680,203 L660,203" stroke="#808080" stroke-width="2" fill="none" stroke-dasharray="4,3"/>
+
+  <!-- =============== ANL FUSE =============== -->
+  <g transform="translate(940, 130)">
+    <rect x="0" y="0" width="120" height="70" rx="6" fill="#2a1a1a" stroke="#e05b5b" stroke-width="1.5"/>
+    <text x="60" y="24" class="compLabel" text-anchor="middle">ANL 15 A</text>
+    <text x="60" y="42" class="subLabel" text-anchor="middle">main fuse</text>
+    <text x="60" y="58" class="warn" text-anchor="middle">MANDATORY</text>
+  </g>
+  <!-- MPPT BAT+ → Fuse -->
+  <line x1="660" y1="165" x2="940" y2="165" stroke="#e05b5b" stroke-width="4"/>
+  <text class="wireLabel" x="750" y="160">12 V DC · 14 AWG silicone</text>
+
+  <!-- =============== BMS =============== -->
+  <g transform="translate(1120, 100)">
+    <rect x="0" y="0" width="220" height="180" rx="8" fill="#2a1a1a" stroke="#e05b5b" stroke-width="1.5"/>
+    <text x="110" y="24" class="compLabel" text-anchor="middle">Daly 3S 20 A Smart BMS</text>
+    <text x="110" y="42" class="subLabel" text-anchor="middle">balance · OVP · UVP · SCP · BLE</text>
+
+    <!-- Terminals -->
+    <g font-size="10" font-family="monospace" fill="#f4e6c8">
+      <circle cx="20" cy="70" r="5" fill="#e05b5b"/><text x="30" y="74">B+ (pack top)</text>
+      <circle cx="20" cy="90" r="5" fill="#f4e6c8"/><text x="30" y="94">B2</text>
+      <circle cx="20" cy="110" r="5" fill="#f4e6c8"/><text x="30" y="114">B1</text>
+      <circle cx="20" cy="130" r="5" fill="#000" stroke="#f4e6c8" stroke-width="0.5"/><text x="30" y="134">B–</text>
+      <circle cx="20" cy="155" r="5" fill="#000" stroke="#f4e6c8" stroke-width="0.5"/><text x="30" y="159">P– (load –)</text>
+    </g>
+    <text x="150" y="160" class="subLabel">Load + goes straight from pack</text>
+    <text x="150" y="172" class="subLabel">(BMS switches – side only)</text>
+  </g>
+  <!-- Fuse → BMS B+ -->
+  <line x1="1060" y1="165" x2="1120" y2="170" stroke="#e05b5b" stroke-width="4"/>
+
+  <!-- =============== BATTERY PACK 3S4P =============== -->
+  <g transform="translate(400, 350)">
+    <rect x="0" y="0" width="620" height="220" rx="8" fill="#241d17" stroke="#f0b429" stroke-width="1.5"/>
+    <text x="310" y="24" class="compLabel" text-anchor="middle">3S4P Salvaged 18650 Battery Pack</text>
+    <text x="310" y="42" class="subLabel" text-anchor="middle">12 matched cells · ~11.1 V nominal · 9.0–12.6 V range · ~89 Wh</text>
+
+    <!-- 3 groups of 4 in parallel, groups in series -->
+    <g transform="translate(30, 60)">
+      <!-- Group 1 (bottom of pack, closest to B-) -->
+      <text x="0" y="20" class="subLabel">Group 1 (P1)</text>
+      <g transform="translate(90, 0)">
+        <rect x="0"   y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="45"  y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="100" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="145" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="200" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="245" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="300" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="345" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+      </g>
+      <!-- Group 2 -->
+      <text x="0" y="70" class="subLabel">Group 2 (P2)</text>
+      <g transform="translate(90, 50)">
+        <rect x="0"   y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="45"  y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="100" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="145" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="200" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="245" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="300" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="345" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+      </g>
+      <!-- Group 3 -->
+      <text x="0" y="120" class="subLabel">Group 3 (P3)</text>
+      <g transform="translate(90, 100)">
+        <rect x="0"   y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="45"  y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="100" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="145" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="200" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="245" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+        <rect x="300" y="0" width="90" height="30" fill="#3a3a3a" stroke="#a08b6b"/>
+        <text x="345" y="20" text-anchor="middle" fill="#f4e6c8" font-size="11">18650</text>
+      </g>
+
+      <!-- Series links (right side of each group -> next group) -->
+      <g stroke="#f2933d" stroke-width="3" fill="none">
+        <path d="M480,15 L510,15 L510,50"/>
+        <path d="M480,65 L510,65 L510,100"/>
+      </g>
+
+      <!-- Nickel-strip parallel joins (top of each group) -->
+      <g stroke="#c8c8c8" stroke-width="2">
+        <line x1="90"  y1="-5" x2="480" y2="-5"/>
+        <line x1="90"  y1="45" x2="480" y2="45"/>
+        <line x1="90"  y1="95" x2="480" y2="95"/>
+      </g>
+
+      <!-- Pack + and Pack - -->
+      <circle cx="500" cy="-5" r="6" fill="#e05b5b"/>
+      <text x="512" y="-1" class="wireLabelB">pack +</text>
+      <circle cx="80" cy="135" r="6" fill="#000" stroke="#f4e6c8" stroke-width="0.5"/>
+      <text x="94" y="139" class="wireLabelB">pack –</text>
+
+      <!-- Balance-lead pickoffs -->
+      <text x="500" y="115" class="wireLabel" fill="#a08b6b">balance leads → BMS B0..B3</text>
+      <line x1="500" y1="97" x2="530" y2="97" stroke="#f4e6c8" stroke-width="1"/>
+      <line x1="500" y1="47" x2="530" y2="47" stroke="#f4e6c8" stroke-width="1"/>
+      <line x1="500" y1="-3" x2="530" y2="-3" stroke="#f4e6c8" stroke-width="1"/>
+      <line x1="90"  y1="135" x2="530" y2="135" stroke="#f4e6c8" stroke-width="0.5"/>
+    </g>
+
+    <!-- Thermal fuse -->
+    <text x="310" y="205" class="warn" text-anchor="middle">
+      + SEFUSE SF77E thermal fuse (77 °C one-shot) in series with pack — $2 insurance
+    </text>
+  </g>
+
+  <!-- BMS to pack wires -->
+  <path d="M1140,170 C1050,170 1050,350 950,350" stroke="#e05b5b" stroke-width="4" fill="none"/>
+  <text class="wireLabel" x="1000" y="255">pack + (12 AWG)</text>
+
+  <path d="M1140,255 C1050,255 1050,485 480,485" stroke="#000000" stroke-width="4" fill="none"/>
+  <text class="wireLabel" x="850" y="480">pack –</text>
+
+  <!-- Balance leads: BMS B1/B2 to pack -->
+  <path d="M1140,190 C1080,190 1080,470 930,470" stroke="#f4e6c8" stroke-width="1.2" fill="none" stroke-dasharray="3,2"/>
+  <path d="M1140,210 C1090,210 1090,420 930,420" stroke="#f4e6c8" stroke-width="1.2" fill="none" stroke-dasharray="3,2"/>
+  <text class="wireLabel" x="1030" y="380">balance</text>
+
+  <!-- =============== LOAD FUSE + BUCK =============== -->
+
+  <g transform="translate(50, 620)">
+    <rect x="0" y="0" width="120" height="70" rx="6" fill="#2a1a1a" stroke="#e05b5b" stroke-width="1.5"/>
+    <text x="60" y="24" class="compLabel" text-anchor="middle">ATO 10 A</text>
+    <text x="60" y="42" class="subLabel" text-anchor="middle">load-side fuse</text>
+  </g>
+
+  <g transform="translate(240, 620)">
+    <rect x="0" y="0" width="240" height="140" rx="8" fill="#241d17" stroke="#f0b429" stroke-width="1.5"/>
+    <text x="120" y="24" class="compLabel" text-anchor="middle">Pololu D36V50F5</text>
+    <text x="120" y="42" class="subLabel" text-anchor="middle">12 → 5 V synchronous buck</text>
+    <text x="120" y="58" class="subLabel" text-anchor="middle">5 A continuous · 92 %+ efficient</text>
+
+    <g font-size="10" font-family="monospace" fill="#f4e6c8">
+      <circle cx="20" cy="88" r="5" fill="#e05b5b"/><text x="30" y="92">VIN (BMS P+ side, 9–12.6 V)</text>
+      <circle cx="20" cy="108" r="5" fill="#000" stroke="#f4e6c8" stroke-width="0.5"/><text x="30" y="112">GND</text>
+      <circle cx="200" cy="88" r="5" fill="#e05b5b"/><text x="180" y="92" text-anchor="end">VOUT 5 V</text>
+      <circle cx="200" cy="108" r="5" fill="#000" stroke="#f4e6c8" stroke-width="0.5"/><text x="180" y="112" text-anchor="end">GND</text>
+    </g>
+  </g>
+
+  <!-- Pack + / – → ATO fuse → buck -->
+  <path d="M950,350 L200,350 L200,620 L110,620 L110,655" stroke="#e05b5b" stroke-width="4" fill="none"/>
+  <text class="wireLabel" x="205" y="345">pack +  (14 AWG silicone)</text>
+
+  <path d="M1150,255 L1180,255 L1180,720 L240,720" stroke="#000000" stroke-width="4" fill="none"/>
+  <text class="wireLabel" x="620" y="716">pack – / GND return</text>
+
+  <!-- Fuse → buck -->
+  <line x1="170" y1="655" x2="240" y2="708" stroke="#e05b5b" stroke-width="3"/>
+  <line x1="170" y1="700" x2="240" y2="728" stroke="#000000" stroke-width="3" opacity="0.7"/>
+
+  <!-- Voltage divider -->
+  <g transform="translate(530, 620)">
+    <rect x="0" y="0" width="240" height="140" rx="8" fill="#1a221a" stroke="#a08b6b"/>
+    <text x="120" y="22" class="compLabel" text-anchor="middle">Pack V Monitor (to Pico ADC)</text>
+    <text x="120" y="40" class="subLabel" text-anchor="middle">100 kΩ / 22 kΩ divider · 5.545×</text>
+
+    <g transform="translate(30, 60)">
+      <line x1="0" y1="10" x2="30" y2="10" stroke="#e05b5b" stroke-width="2"/>
+      <text x="-5" y="14" text-anchor="end" fill="#f4e6c8" font-size="10">pack +</text>
+      <rect x="30" y="4" width="42" height="12" fill="none" stroke="#f4e6c8"/>
+      <text x="51" y="14" text-anchor="middle" fill="#f4e6c8" font-size="9">100 kΩ</text>
+      <line x1="72" y1="10" x2="105" y2="10" stroke="#a3743a" stroke-width="2"/>
+      <text x="110" y="14" fill="#f4e6c8" font-size="10">→ GP28 (Pico ADC2)</text>
+      <line x1="88" y1="10" x2="88" y2="35" stroke="#a3743a" stroke-width="2"/>
+      <rect x="68" y="35" width="42" height="12" fill="none" stroke="#f4e6c8"/>
+      <text x="89" y="45" text-anchor="middle" fill="#f4e6c8" font-size="9">22 kΩ</text>
+      <line x1="88" y1="47" x2="88" y2="60" stroke="#000000" stroke-width="2"/>
+      <text x="98" y="60" fill="#f4e6c8" font-size="10">GND</text>
+    </g>
+  </g>
+  <path d="M770,660 L910,660 L910,545" stroke="#a3743a" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="775" y="655">→ Pico</text>
+
+  <!-- =============== PI LOAD =============== -->
+  <g transform="translate(830, 620)">
+    <rect x="0" y="0" width="260" height="140" rx="8" fill="#241d17" stroke="#f0b429" stroke-width="1.5"/>
+    <text x="130" y="24" class="compLabel" text-anchor="middle">Raspberry Pi 5 + Pico</text>
+    <text x="130" y="42" class="subLabel" text-anchor="middle">5 V @ up to ~2.5 A peak (Pi + cams + Pico)</text>
+    <text x="130" y="58" class="subLabel" text-anchor="middle">add 2200 µF/10 V+ reservoir cap on 5 V rail</text>
+
+    <g font-size="10" font-family="monospace" fill="#f4e6c8">
+      <circle cx="20" cy="88" r="5" fill="#e05b5b"/><text x="30" y="92">5 V → Pi GPIO pin 2 (or USB-C)</text>
+      <circle cx="20" cy="108" r="5" fill="#000" stroke="#f4e6c8" stroke-width="0.5"/><text x="30" y="112">GND → Pi GPIO pin 6</text>
+    </g>
+  </g>
+  <path d="M480,708 L830,708" stroke="#e05b5b" stroke-width="4" fill="none"/>
+  <text class="wireLabel" x="640" y="703">5 V (18 AWG, keep short)</text>
+  <path d="M480,728 L830,728" stroke="#000000" stroke-width="4" fill="none"/>
+
+  <!-- =============== SPEC BOX =============== -->
+  <g transform="translate(1120, 620)">
+    <rect x="0" y="0" width="230" height="240" rx="8" fill="#241d17" stroke="#f0b429"/>
+    <text x="115" y="26" class="sect" text-anchor="middle">Fuse & wire summary</text>
+    <text x="15" y="52" class="subLabel">Panel → MPPT   :  10 AWG · MC4</text>
+    <text x="15" y="70" class="subLabel">MPPT → ANL 15 A → BMS+   :  14 AWG silicone</text>
+    <text x="15" y="88" class="subLabel">BMS ↔ pack   :  12 AWG silicone</text>
+    <text x="15" y="106" class="subLabel">Balance leads (×4)   :  22 AWG</text>
+    <text x="15" y="124" class="subLabel">Pack – → BMS P–   :  12 AWG</text>
+    <text x="15" y="142" class="subLabel">BMS P+ → ATO 10 A → buck   :  14 AWG</text>
+    <text x="15" y="160" class="subLabel">Buck 5 V → Pi   :  18 AWG</text>
+    <text x="15" y="178" class="subLabel">NTC → MPPT temp   :  22 AWG twisted</text>
+    <text x="15" y="196" class="subLabel">Pack V sense → Pico   :  22 AWG</text>
+    <text x="15" y="220" class="warn">All wire silicone-insulated (UV-stable)</text>
+  </g>
+
+  <!-- =============== WARNING FOOTER =============== -->
+  <g transform="translate(50, 890)">
+    <rect x="0" y="0" width="1300" height="90" rx="6" fill="#3a1a1a" stroke="#e05b5b" stroke-width="1.5"/>
+    <text x="15" y="22" class="warn">SAFETY — DO NOT SKIP</text>
+    <text x="15" y="42" fill="#f4e6c8" font-size="12">• Cell testing (Opus BT-C3100) &amp; matching before pack assembly.  Reject any cell &lt; 1500 mAh, &gt; 80 mΩ IR, or &gt; 30 mV self-discharge/week.</text>
+    <text x="15" y="60" fill="#f4e6c8" font-size="12">• 14-day bench burn-in before deployment.  Log Daly BMS Bluetooth cell voltages daily.  Rebuild any parallel group where a cell drifts &gt; 50 mV under load.</text>
+    <text x="15" y="78" fill="#f4e6c8" font-size="12">• Absorption 12.30 V (4.10 V/cell) not 12.60 V — halves capacity loss over years.  NTC required — never charge Li-ion below 0 °C.</text>
+  </g>
+</svg>

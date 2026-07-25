@@ -1,0 +1,15 @@
+[Unit]
+Description=Beehive audio capture + FFT
+After=sound.target
+
+[Service]
+Type=simple
+User=pi
+Group=audio
+WorkingDirectory=/home/pi/beehive-automation
+ExecStart=/usr/bin/python3 -m pi.services.audio_service --config /etc/beehive/config.yaml
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

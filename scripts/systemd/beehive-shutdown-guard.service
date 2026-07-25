@@ -1,0 +1,14 @@
+[Unit]
+Description=Beehive graceful low-battery shutdown
+After=beehive-ingest.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/pi/beehive-automation
+ExecStart=/usr/bin/python3 -m pi.services.shutdown_guard --config /etc/beehive/config.yaml
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

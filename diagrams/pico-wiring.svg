@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000" font-family="Verdana, sans-serif">
+  <title>Pi Pico 2 — Sensor Wiring Detail</title>
+  <desc>Every pin of the Pico with wire color, function, and the sensor it connects to.</desc>
+
+  <defs>
+    <style>
+      .wireLabel { fill: #f4e6c8; font-size: 11px; }
+      .pinLabel  { fill: #f4e6c8; font-size: 11px; font-family: monospace; }
+      .pinNum    { fill: #a08b6b; font-size: 10px; font-family: monospace; }
+      .compLabel { fill: #f4e6c8; font-size: 14px; font-weight: bold; }
+      .subLabel  { fill: #a08b6b; font-size: 10px; }
+      .title     { fill: #f0b429; font-size: 22px; font-weight: bold; }
+      .sect      { fill: #f0b429; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="1500" height="1000" fill="#1a1512"/>
+  <text x="30" y="40" class="title">🐝  Pi Pico 2 — Detailed Sensor Wiring</text>
+  <text x="30" y="60" class="subLabel">Every used pin colored by function.  Wire colors match docs/hardware.md convention.</text>
+
+  <!-- ============ PICO BODY IN THE CENTER ============ -->
+  <g transform="translate(600, 130)">
+    <!-- Pico PCB -->
+    <rect x="0" y="0" width="300" height="600" rx="18" fill="#0a3050" stroke="#f0b429" stroke-width="2"/>
+    <text x="150" y="30" text-anchor="middle" fill="#f4e6c8" font-size="16" font-weight="bold">Raspberry Pi Pico 2</text>
+    <!-- USB at top -->
+    <rect x="120" y="-16" width="60" height="20" fill="#c0c0c0"/>
+    <text x="150" y="-2" text-anchor="middle" font-size="10" fill="#333">USB-C</text>
+    <text x="150" y="55" text-anchor="middle" font-size="11" fill="#a08b6b">(→ Pi USB — data + power)</text>
+
+    <!-- BOOTSEL button hint -->
+    <circle cx="150" cy="90" r="9" fill="#f4e6c8" opacity="0.4"/>
+    <text x="150" y="94" text-anchor="middle" font-size="9" fill="#0a3050">BSEL</text>
+
+    <!-- LED -->
+    <circle cx="150" cy="580" r="5" fill="#7aa87a"/>
+    <text x="150" y="595" text-anchor="middle" font-size="9" fill="#a08b6b">LED</text>
+  </g>
+
+  <!-- ============ PIN LAYOUT ============ -->
+  <!-- 40-pin layout: pin 1 is at top-left of the Pico when USB is up.
+       Left side: pins 1..20 top-to-bottom. Right side: pins 40..21 top-to-bottom. -->
+
+  <!-- Left column pins (numbered top-down 1..20) -->
+  <g id="left-pins">
+    <!-- Each pin: circle + label -->
+    <g transform="translate(580, 160)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP0</text><text class="pinNum" x="-52" y="4" text-anchor="end">01</text></g>
+    <g transform="translate(580, 180)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP1</text><text class="pinNum" x="-52" y="4" text-anchor="end">02</text></g>
+    <g transform="translate(580, 200)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GND</text><text class="pinNum" x="-52" y="4" text-anchor="end">03</text></g>
+    <g transform="translate(580, 220)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP2</text><text class="pinNum" x="-52" y="4" text-anchor="end">04</text></g>
+    <g transform="translate(580, 240)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP3</text><text class="pinNum" x="-52" y="4" text-anchor="end">05</text></g>
+    <g transform="translate(580, 260)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP4</text><text class="pinNum" x="-52" y="4" text-anchor="end">06</text></g>
+    <g transform="translate(580, 280)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP5</text><text class="pinNum" x="-52" y="4" text-anchor="end">07</text></g>
+    <g transform="translate(580, 300)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GND</text><text class="pinNum" x="-52" y="4" text-anchor="end">08</text></g>
+    <g transform="translate(580, 320)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP6</text><text class="pinNum" x="-52" y="4" text-anchor="end">09</text></g>
+    <g transform="translate(580, 340)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP7</text><text class="pinNum" x="-52" y="4" text-anchor="end">10</text></g>
+    <g transform="translate(580, 360)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP8</text><text class="pinNum" x="-52" y="4" text-anchor="end">11</text></g>
+    <g transform="translate(580, 380)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP9</text><text class="pinNum" x="-52" y="4" text-anchor="end">12</text></g>
+    <g transform="translate(580, 400)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GND</text><text class="pinNum" x="-52" y="4" text-anchor="end">13</text></g>
+    <g transform="translate(580, 420)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP10</text><text class="pinNum" x="-52" y="4" text-anchor="end">14</text></g>
+    <g transform="translate(580, 440)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP11</text><text class="pinNum" x="-52" y="4" text-anchor="end">15</text></g>
+    <g transform="translate(580, 460)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP12</text><text class="pinNum" x="-52" y="4" text-anchor="end">16</text></g>
+    <g transform="translate(580, 480)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP13</text><text class="pinNum" x="-52" y="4" text-anchor="end">17</text></g>
+    <g transform="translate(580, 500)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GND</text><text class="pinNum" x="-52" y="4" text-anchor="end">18</text></g>
+    <g transform="translate(580, 520)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP14</text><text class="pinNum" x="-52" y="4" text-anchor="end">19</text></g>
+    <g transform="translate(580, 540)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="-12" y="4" text-anchor="end">GP15</text><text class="pinNum" x="-52" y="4" text-anchor="end">20</text></g>
+  </g>
+
+  <!-- Right column pins (numbered top-down 40..21) -->
+  <g id="right-pins">
+    <g transform="translate(920, 160)"><circle cx="0" cy="0" r="6" fill="#e05b5b"/><text class="pinLabel" x="12" y="4">VBUS</text><text class="pinNum" x="52" y="4">40</text></g>
+    <g transform="translate(920, 180)"><circle cx="0" cy="0" r="6" fill="#e05b5b"/><text class="pinLabel" x="12" y="4">VSYS</text><text class="pinNum" x="52" y="4">39</text></g>
+    <g transform="translate(920, 200)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="12" y="4">GND</text><text class="pinNum" x="52" y="4">38</text></g>
+    <g transform="translate(920, 220)"><circle cx="0" cy="0" r="6" fill="#f2933d"/><text class="pinLabel" x="12" y="4">3V3_EN</text><text class="pinNum" x="52" y="4">37</text></g>
+    <g transform="translate(920, 240)"><circle cx="0" cy="0" r="6" fill="#f2933d"/><text class="pinLabel" x="12" y="4">3V3_OUT</text><text class="pinNum" x="52" y="4">36</text></g>
+    <g transform="translate(920, 260)"><circle cx="0" cy="0" r="6" fill="#a3743a"/><text class="pinLabel" x="12" y="4">ADC_VREF</text><text class="pinNum" x="52" y="4">35</text></g>
+    <g transform="translate(920, 280)"><circle cx="0" cy="0" r="6" fill="#a3743a"/><text class="pinLabel" x="12" y="4">GP28 / ADC2</text><text class="pinNum" x="90" y="4">34</text></g>
+    <g transform="translate(920, 300)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="12" y="4">AGND</text><text class="pinNum" x="52" y="4">33</text></g>
+    <g transform="translate(920, 320)"><circle cx="0" cy="0" r="6" fill="#606060"/><text class="pinLabel" x="12" y="4">GP27 / ADC1  (spare)</text><text class="pinNum" x="130" y="4">32</text></g>
+    <g transform="translate(920, 340)"><circle cx="0" cy="0" r="6" fill="#606060"/><text class="pinLabel" x="12" y="4">GP26 / ADC0  (spare)</text><text class="pinNum" x="130" y="4">31</text></g>
+    <g transform="translate(920, 360)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="12" y="4">RUN  (Pi resets Pico)</text><text class="pinNum" x="130" y="4">30</text></g>
+    <g transform="translate(920, 380)"><circle cx="0" cy="0" r="6" fill="#b58ce0"/><text class="pinLabel" x="12" y="4">GP22  1-Wire</text><text class="pinNum" x="90" y="4">29</text></g>
+    <g transform="translate(920, 400)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="12" y="4">GND</text><text class="pinNum" x="52" y="4">28</text></g>
+    <g transform="translate(920, 420)"><circle cx="0" cy="0" r="6" fill="#7aa87a"/><text class="pinLabel" x="12" y="4">GP21  I²C0 SCL</text><text class="pinNum" x="100" y="4">27</text></g>
+    <g transform="translate(920, 440)"><circle cx="0" cy="0" r="6" fill="#ffff66"/><text class="pinLabel" x="12" y="4">GP20  I²C0 SDA</text><text class="pinNum" x="100" y="4">26</text></g>
+    <g transform="translate(920, 460)"><circle cx="0" cy="0" r="6" fill="#808080"/><text class="pinLabel" x="12" y="4">GP19  HX711 SCK</text><text class="pinNum" x="100" y="4">25</text></g>
+    <g transform="translate(920, 480)"><circle cx="0" cy="0" r="6" fill="#ffffff"/><text class="pinLabel" x="12" y="4">GP18  HX711 DOUT</text><text class="pinNum" x="120" y="4">24</text></g>
+    <g transform="translate(920, 500)"><circle cx="0" cy="0" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/><text class="pinLabel" x="12" y="4">GND</text><text class="pinNum" x="52" y="4">23</text></g>
+    <g transform="translate(920, 520)"><circle cx="0" cy="0" r="6" fill="#7aa87a"/><text class="pinLabel" x="12" y="4">GP17  I²C1 SCL</text><text class="pinNum" x="100" y="4">22</text></g>
+    <g transform="translate(920, 540)"><circle cx="0" cy="0" r="6" fill="#ffff66"/><text class="pinLabel" x="12" y="4">GP16  I²C1 SDA</text><text class="pinNum" x="100" y="4">21</text></g>
+  </g>
+
+  <!-- ============ SENSOR BOXES + WIRES ============ -->
+
+  <!-- I²C0: SHT41 (top-right area) -->
+  <g transform="translate(1180, 200)">
+    <rect x="0" y="0" width="270" height="70" rx="6" fill="#1a221a" stroke="#7aa87a"/>
+    <text x="135" y="20" class="compLabel" text-anchor="middle">SHT41 — internal RH+T</text>
+    <text x="135" y="38" class="subLabel" text-anchor="middle">I²C0 · addr 0x44 · 3.3 V native</text>
+    <text x="135" y="54" class="subLabel" text-anchor="middle">Inside the hive · SHT31-DIS-F variant recommended for propolis resistance</text>
+  </g>
+  <!-- SDA yellow -->
+  <path d="M932,440 L1100,440 L1100,220 L1180,220" stroke="#ffff66" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="1000" y="435">SDA</text>
+  <!-- SCL green -->
+  <path d="M932,420 L1090,420 L1090,240 L1180,240" stroke="#7aa87a" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="1000" y="415">SCL</text>
+  <!-- 3V3 orange -->
+  <path d="M932,240 L1080,240 L1080,205 L1180,205" stroke="#f2933d" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="1000" y="235">3V3</text>
+  <!-- GND black -->
+  <path d="M932,300 L1070,300 L1070,262 L1180,262" stroke="#000000" stroke-width="2" fill="none"/>
+
+  <!-- I²C0: BME280 -->
+  <g transform="translate(1180, 300)">
+    <rect x="0" y="0" width="270" height="70" rx="6" fill="#1a221a" stroke="#7aa87a"/>
+    <text x="135" y="20" class="compLabel" text-anchor="middle">BME280 — outside T/RH/P</text>
+    <text x="135" y="38" class="subLabel" text-anchor="middle">I²C0 · addr 0x76 · 3.3 V native</text>
+    <text x="135" y="54" class="subLabel" text-anchor="middle">In Stevenson-style radiation shield, ~1 m from hive</text>
+  </g>
+  <path d="M932,440 L1150,440 L1150,320 L1180,320" stroke="#ffff66" stroke-width="2" fill="none"/>
+  <path d="M932,420 L1140,420 L1140,340 L1180,340" stroke="#7aa87a" stroke-width="2" fill="none"/>
+  <path d="M932,240 L1160,240 L1160,305 L1180,305" stroke="#f2933d" stroke-width="2" fill="none"/>
+  <path d="M932,300 L1170,300 L1170,362 L1180,362" stroke="#000000" stroke-width="2" fill="none"/>
+
+  <!-- DS18B20 -->
+  <g transform="translate(1180, 400)">
+    <rect x="0" y="0" width="270" height="70" rx="6" fill="#1a221a" stroke="#7aa87a"/>
+    <text x="135" y="20" class="compLabel" text-anchor="middle">DS18B20 × 4 — probes</text>
+    <text x="135" y="38" class="subLabel" text-anchor="middle">1-Wire (GP22) · 3-wire mode</text>
+    <text x="135" y="54" class="subLabel" text-anchor="middle">4.7 kΩ pull-up · top / above brood / brood-side / entrance</text>
+  </g>
+  <path d="M932,380 L1155,380 L1155,420 L1180,420" stroke="#b58ce0" stroke-width="2" fill="none"/>
+  <!-- pull-up depicted -->
+  <rect x="1120" y="392" width="20" height="8" fill="none" stroke="#f4e6c8" stroke-width="0.6"/>
+  <text class="wireLabel" x="1130" y="388" text-anchor="middle">4k7</text>
+  <path d="M1120,396 L1000,396" stroke="#f2933d" stroke-width="1.4" fill="none"/>
+
+  <!-- I²C1 sensors box -->
+  <g transform="translate(1180, 500)">
+    <rect x="0" y="0" width="270" height="130" rx="6" fill="#1a221a" stroke="#7aa87a"/>
+    <text x="135" y="20" class="compLabel" text-anchor="middle">I²C1 bus (GP16/17)</text>
+    <text x="135" y="42" class="subLabel" text-anchor="middle">VEML7700  · 0x10 · lux</text>
+    <text x="135" y="60" class="subLabel" text-anchor="middle">SCD41 (opt.) · 0x62 · CO₂ NDIR</text>
+    <text x="135" y="78" class="subLabel" text-anchor="middle">SGP40 (opt.) · 0x59 · VOC</text>
+    <text x="135" y="102" class="subLabel" text-anchor="middle">3.3 V · daisy-chained SDA/SCL</text>
+  </g>
+  <path d="M932,540 L1180,540" stroke="#ffff66" stroke-width="2" fill="none"/>
+  <path d="M932,520 L1170,520 L1170,522 L1180,522" stroke="#7aa87a" stroke-width="2" fill="none"/>
+
+  <!-- ============ LEFT-SIDE SENSORS ============ -->
+
+  <!-- HX711 + load cells -->
+  <g transform="translate(50, 200)">
+    <rect x="0" y="0" width="450" height="130" rx="6" fill="#1a221a" stroke="#7aa87a"/>
+    <text x="225" y="20" class="compLabel" text-anchor="middle">HX711 + 4× 50 kg Load Cells (Wheatstone bridge)</text>
+    <text x="225" y="42" class="subLabel" text-anchor="middle">Under the hive stand · dedicated bit-banged GPIO</text>
+    <text x="225" y="60" class="subLabel" text-anchor="middle">SHIELDED CAT6 required — data pair + power pair, foil to Pico GND only</text>
+
+    <!-- HX711 board -->
+    <rect x="20" y="75" width="90" height="45" fill="#2f271f" stroke="#f0b429"/>
+    <text x="65" y="95" text-anchor="middle" class="compLabel">HX711</text>
+    <text x="65" y="112" text-anchor="middle" class="subLabel">24-bit ADC</text>
+    <!-- Bridge -->
+    <text x="230" y="88" text-anchor="middle" class="subLabel">Bridge combinator board</text>
+    <line x1="130" y1="98" x2="200" y2="98" stroke="#e05b5b" stroke-width="2"/>
+    <line x1="130" y1="108" x2="200" y2="108" stroke="#000000" stroke-width="2"/>
+    <line x1="130" y1="103" x2="200" y2="103" stroke="#7aa87a" stroke-width="2"/>
+    <line x1="130" y1="113" x2="200" y2="113" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- 4 load cells -->
+    <rect x="240" y="80" width="45" height="20" fill="#2f271f" stroke="#a08b6b"/><text x="262" y="95" text-anchor="middle" class="subLabel">cell 1</text>
+    <rect x="295" y="80" width="45" height="20" fill="#2f271f" stroke="#a08b6b"/><text x="317" y="95" text-anchor="middle" class="subLabel">cell 2</text>
+    <rect x="350" y="80" width="45" height="20" fill="#2f271f" stroke="#a08b6b"/><text x="372" y="95" text-anchor="middle" class="subLabel">cell 3</text>
+    <rect x="405" y="80" width="45" height="20" fill="#2f271f" stroke="#a08b6b"/><text x="427" y="95" text-anchor="middle" class="subLabel">cell 4</text>
+    <text x="330" y="118" text-anchor="middle" class="subLabel">50 kg half-bridge bar cells (E+/E-/A+/A- wired diagonally)</text>
+  </g>
+  <!-- Wires HX711 → Pico -->
+  <!-- DOUT (white) → GP18 (pin 24, right side y=480) -- routed under -->
+  <path d="M110,275 L555,275 L555,480 L580,480" stroke="#ffffff" stroke-width="2" fill="none" opacity="0"/>
+  <!-- (Note: HX711 is at left, GP18/GP19 are on right side of Pico.  Route around) -->
+  <path d="M500,240 L540,240 L540,480 L910,480" stroke="#ffffff" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="500" y="235" text-anchor="end">DOUT</text>
+  <path d="M500,265 L550,265 L550,460 L910,460" stroke="#808080" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="500" y="260" text-anchor="end">SCK</text>
+  <path d="M500,215 L530,215 L530,240 L910,240" stroke="#f2933d" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="510" y="212">3V3</text>
+  <path d="M500,290 L560,290 L560,300 L910,300" stroke="#000000" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="530" y="286">GND</text>
+
+  <!-- Bee gate -->
+  <g transform="translate(50, 380)">
+    <rect x="0" y="0" width="450" height="220" rx="6" fill="#1a221a" stroke="#7aa87a"/>
+    <text x="225" y="20" class="compLabel" text-anchor="middle">Bee Gate — 8 tunnels × 2 IR beams</text>
+    <text x="225" y="38" class="subLabel" text-anchor="middle">Everlight ITR9606 slotted opto-interrupters (5 mm gap)</text>
+    <text x="225" y="54" class="subLabel" text-anchor="middle">Beam A = outer, Beam B = inner · direction from trip order</text>
+
+    <!-- Drawing of gate: 8 tunnels -->
+    <g transform="translate(30, 75)">
+      <rect x="0" y="0" width="390" height="120" fill="#2f271f" stroke="#a08b6b"/>
+      <!-- Tunnels -->
+      <g font-size="8" fill="#a08b6b">
+        <line x1="45"  y1="10" x2="45"  y2="110" stroke="#a08b6b"/>
+        <line x1="90"  y1="10" x2="90"  y2="110" stroke="#a08b6b"/>
+        <line x1="135" y1="10" x2="135" y2="110" stroke="#a08b6b"/>
+        <line x1="180" y1="10" x2="180" y2="110" stroke="#a08b6b"/>
+        <line x1="225" y1="10" x2="225" y2="110" stroke="#a08b6b"/>
+        <line x1="270" y1="10" x2="270" y2="110" stroke="#a08b6b"/>
+        <line x1="315" y1="10" x2="315" y2="110" stroke="#a08b6b"/>
+        <text x="195" y="65" text-anchor="middle" fill="#f4e6c8" font-size="11">8 tunnels · single-file bees</text>
+
+        <!-- Beam A (top row of yellow dots) and Beam B (bottom row) -->
+        <g fill="#f2933d">
+          <circle cx="22"  cy="30" r="3"/>
+          <circle cx="67"  cy="30" r="3"/>
+          <circle cx="112" cy="30" r="3"/>
+          <circle cx="157" cy="30" r="3"/>
+          <circle cx="202" cy="30" r="3"/>
+          <circle cx="247" cy="30" r="3"/>
+          <circle cx="292" cy="30" r="3"/>
+          <circle cx="337" cy="30" r="3"/>
+        </g>
+        <text x="360" y="34" fill="#f4e6c8" font-size="9">Beam A (GP0–7)</text>
+
+        <g fill="#7aa87a">
+          <circle cx="22"  cy="95" r="3"/>
+          <circle cx="67"  cy="95" r="3"/>
+          <circle cx="112" cy="95" r="3"/>
+          <circle cx="157" cy="95" r="3"/>
+          <circle cx="202" cy="95" r="3"/>
+          <circle cx="247" cy="95" r="3"/>
+          <circle cx="292" cy="95" r="3"/>
+          <circle cx="337" cy="95" r="3"/>
+        </g>
+        <text x="360" y="99" fill="#f4e6c8" font-size="9">Beam B (GP8–15)</text>
+      </g>
+    </g>
+  </g>
+  <!-- IR gate wires to Pico left column -->
+  <path d="M500,400 L560,400 L560,160 L580,160" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,410 L560,410 L560,180 L580,180" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,420 L560,420 L560,220 L580,220" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,430 L560,430 L560,240 L580,240" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,440 L560,440 L560,260 L580,260" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,450 L560,450 L560,280 L580,280" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,460 L560,460 L560,320 L580,320" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,470 L560,470 L560,340 L580,340" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,510 L570,510 L570,360 L580,360" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,520 L570,520 L570,380 L580,380" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,530 L570,530 L570,420 L580,420" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,540 L570,540 L570,440 L580,440" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,550 L570,550 L570,460 L580,460" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,560 L570,560 L570,480 L580,480" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,570 L570,570 L570,520 L580,520" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <path d="M500,580 L570,580 L570,540 L580,540" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+
+  <!-- Pack voltage divider -->
+  <g transform="translate(50, 650)">
+    <rect x="0" y="0" width="450" height="120" rx="6" fill="#1a221a" stroke="#7aa87a"/>
+    <text x="225" y="20" class="compLabel" text-anchor="middle">Pack Voltage Monitor (ADC)</text>
+    <text x="225" y="38" class="subLabel" text-anchor="middle">100 kΩ / 22 kΩ divider · 5.545× ratio</text>
+    <text x="225" y="54" class="subLabel" text-anchor="middle">Pack up to 12.6 V → ADC sees 2.27 V (safe under 3.3 V max)</text>
+
+    <!-- Simple divider diagram -->
+    <g transform="translate(80, 70)">
+      <text x="0" y="12" class="wireLabel">pack +</text>
+      <line x1="45" y1="10" x2="90" y2="10" stroke="#e05b5b" stroke-width="2"/>
+      <rect x="90" y="4" width="40" height="12" fill="none" stroke="#f4e6c8"/>
+      <text x="110" y="14" text-anchor="middle" fill="#f4e6c8" font-size="9">100 kΩ</text>
+      <line x1="130" y1="10" x2="170" y2="10" stroke="#a3743a" stroke-width="2"/>
+      <text x="176" y="14" class="wireLabel">→ GP28 (ADC2)</text>
+
+      <line x1="150" y1="10" x2="150" y2="30" stroke="#a3743a" stroke-width="2"/>
+      <rect x="130" y="30" width="40" height="12" fill="none" stroke="#f4e6c8"/>
+      <text x="150" y="40" text-anchor="middle" fill="#f4e6c8" font-size="9">22 kΩ</text>
+      <line x1="150" y1="42" x2="150" y2="55" stroke="#000000" stroke-width="2"/>
+      <text x="160" y="55" class="wireLabel">GND</text>
+    </g>
+  </g>
+  <!-- ADC line -->
+  <path d="M500,690 L560,690 L560,280 L910,280" stroke="#a3743a" stroke-width="2" fill="none"/>
+
+  <!-- ============ Notes / Legend ============ -->
+  <g transform="translate(50, 810)">
+    <rect x="0" y="0" width="1400" height="170" rx="6" fill="#241d17" stroke="#f0b429"/>
+    <text x="15" y="22" class="sect">Notes</text>
+    <text x="15" y="45" class="subLabel">• All sensors are 3.3 V native — powered from the Pico's 3V3_OUT (pin 36).  Do NOT connect any 5 V-only sensor without a level shifter.</text>
+    <text x="15" y="63" class="subLabel">• I²C0 (SHT41 + BME280) and I²C1 (VEML7700 + SCD41 + SGP40) are separated so a hung sensor on one bus doesn't kill the other.</text>
+    <text x="15" y="81" class="subLabel">• 4.7 kΩ pull-up on 1-Wire (GP22 → 3V3).  I²C pull-ups live on the sensor breakouts.</text>
+    <text x="15" y="99" class="subLabel">• HX711 to Pico uses SHIELDED CAT6.  Foil drain terminates at the Pico GND end only.  Keep run under 1 m.</text>
+    <text x="15" y="117" class="subLabel">• Bee-gate phototransistors are pulled up with 10 kΩ to 3V3.  IR LED side gets a 220 Ω series resistor from 3V3.  All 16 phototransistor emitters return to Pico GND.</text>
+    <text x="15" y="135" class="subLabel">• RUN pin (30) is wired to Pi GPIO23 — the Pi can pulse it low to hard-reset the Pico if serial packets stop arriving for &gt; 30 s.</text>
+    <text x="15" y="153" class="subLabel">• Conformal-coat every PCB going into or near the hive with MG Chemicals 419D — mask sensor apertures (SHT41 opening, DS18B20 tips, IR slot) before spraying.</text>
+  </g>
+
+</svg>

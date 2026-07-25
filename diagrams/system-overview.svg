@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" font-family="Verdana, sans-serif">
+  <title>Bee Hive Automation — System Overview</title>
+  <desc>Colored-wire block diagram: solar/battery → BMS → buck → Pi 5 + Pico → sensors.</desc>
+
+  <defs>
+    <!-- Arrowhead markers -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#f4e6c8"/>
+    </marker>
+    <!-- Component box gradient -->
+    <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f271f"/>
+      <stop offset="1" stop-color="#241d17"/>
+    </linearGradient>
+    <!-- Wire-color legend swatch style -->
+    <style>
+      .wireLabel { fill: #f4e6c8; font-size: 12px; }
+      .compLabel { fill: #f4e6c8; font-size: 15px; font-weight: bold; }
+      .subLabel  { fill: #a08b6b; font-size: 11px; }
+      .title     { fill: #f0b429; font-size: 22px; font-weight: bold; }
+      .sect      { fill: #f0b429; font-size: 14px; font-weight: bold; }
+      rect.comp  { stroke: #f0b429; stroke-width: 1.5; fill: url(#boxGrad); }
+      rect.sensor{ stroke: #7aa87a; stroke-width: 1.2; fill: #1a221a; }
+      rect.power { stroke: #e05b5b; stroke-width: 1.5; fill: #2a1a1a; }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="1400" height="900" fill="#1a1512"/>
+
+  <!-- title -->
+  <text x="30" y="40" class="title">🐝  Bee Hive Automation — System Overview</text>
+  <text x="30" y="60" class="subLabel">Off-grid Raspberry Pi 5 + Pico monitor · salvaged-cell solar power · colored-wire wiring diagram</text>
+
+  <!-- ============ POWER SECTION (top-left) ============ -->
+  <text x="30" y="100" class="sect">Power</text>
+  <line x1="30" y1="108" x2="510" y2="108" stroke="#f0b429" stroke-width="0.5"/>
+
+  <!-- Solar panel -->
+  <rect class="power" x="30"  y="130" width="140" height="60" rx="6"/>
+  <text class="compLabel" x="100" y="158" text-anchor="middle">Solar Panel</text>
+  <text class="subLabel"  x="100" y="176" text-anchor="middle">100 W · 12 V mono</text>
+
+  <!-- MPPT -->
+  <rect class="power" x="210" y="130" width="140" height="60" rx="6"/>
+  <text class="compLabel" x="280" y="152" text-anchor="middle">Victron MPPT</text>
+  <text class="subLabel"  x="280" y="168" text-anchor="middle">75/15 · Li-ion profile</text>
+  <text class="subLabel"  x="280" y="180" text-anchor="middle">absorption 12.30 V</text>
+
+  <!-- ANL fuse -->
+  <rect class="power" x="390" y="140" width="60" height="40" rx="4"/>
+  <text class="compLabel" x="420" y="158" text-anchor="middle">FUSE</text>
+  <text class="subLabel"  x="420" y="172" text-anchor="middle">ANL 15 A</text>
+
+  <!-- BMS -->
+  <rect class="power" x="30"  y="230" width="140" height="60" rx="6"/>
+  <text class="compLabel" x="100" y="252" text-anchor="middle">Daly 3S BMS</text>
+  <text class="subLabel"  x="100" y="268" text-anchor="middle">20 A · balance</text>
+  <text class="subLabel"  x="100" y="280" text-anchor="middle">Bluetooth telemetry</text>
+
+  <!-- Battery pack -->
+  <rect class="power" x="210" y="230" width="140" height="60" rx="6"/>
+  <text class="compLabel" x="280" y="252" text-anchor="middle">3S4P Pack</text>
+  <text class="subLabel"  x="280" y="268" text-anchor="middle">12× matched 18650</text>
+  <text class="subLabel"  x="280" y="280" text-anchor="middle">~11.1 V · ~89 Wh</text>
+
+  <!-- ATO fuse -->
+  <rect class="power" x="390" y="240" width="60" height="40" rx="4"/>
+  <text class="compLabel" x="420" y="258" text-anchor="middle">FUSE</text>
+  <text class="subLabel"  x="420" y="272" text-anchor="middle">ATO 10 A</text>
+
+  <!-- Buck 5V -->
+  <rect class="power" x="30"  y="330" width="140" height="60" rx="6"/>
+  <text class="compLabel" x="100" y="352" text-anchor="middle">Pololu D36V50F5</text>
+  <text class="subLabel"  x="100" y="368" text-anchor="middle">12 → 5 V · 5 A</text>
+  <text class="subLabel"  x="100" y="380" text-anchor="middle">synchronous buck</text>
+
+  <!-- NTC thermistor -->
+  <rect class="sensor" x="210" y="330" width="140" height="60" rx="6"/>
+  <text class="compLabel" x="280" y="352" text-anchor="middle">10k NTC</text>
+  <text class="subLabel"  x="280" y="368" text-anchor="middle">on battery pack</text>
+  <text class="subLabel"  x="280" y="380" text-anchor="middle">→ MPPT temp sense</text>
+
+  <!-- ============ WIRING BETWEEN POWER COMPONENTS ============ -->
+  <!-- Solar+ (red) to MPPT -->
+  <line x1="170" y1="150" x2="210" y2="150" stroke="#e05b5b" stroke-width="3"/>
+  <!-- Solar- (black) to MPPT -->
+  <line x1="170" y1="170" x2="210" y2="170" stroke="#000000" stroke-width="3"/>
+  <text class="wireLabel" x="188" y="145" text-anchor="middle">18 V</text>
+
+  <!-- MPPT to Fuse (red) -->
+  <line x1="350" y1="160" x2="390" y2="160" stroke="#e05b5b" stroke-width="3"/>
+  <!-- Fuse to BMS+ (drops down-left) -->
+  <path d="M420,180 L420,210 L100,210 L100,230" stroke="#e05b5b" stroke-width="3" fill="none"/>
+  <!-- MPPT gnd loop to pack gnd (goes via BMS) -->
+  <path d="M280,190 L280,220 L100,220 L100,230" stroke="#000000" stroke-width="3" fill="none" opacity="0.4"/>
+
+  <!-- BMS to pack -->
+  <line x1="170" y1="250" x2="210" y2="250" stroke="#e05b5b" stroke-width="3"/>
+  <line x1="170" y1="270" x2="210" y2="270" stroke="#000000" stroke-width="3"/>
+  <text class="wireLabel" x="188" y="245" text-anchor="middle">B±</text>
+
+  <!-- Pack out to Load fuse -->
+  <line x1="350" y1="260" x2="390" y2="260" stroke="#e05b5b" stroke-width="3"/>
+
+  <!-- Fuse to Buck (red drops down-left) -->
+  <path d="M420,280 L420,310 L100,310 L100,330" stroke="#e05b5b" stroke-width="3" fill="none"/>
+
+  <!-- NTC to MPPT (grey / control) -->
+  <path d="M280,330 L280,200 L350,200" stroke="#808080" stroke-width="2" fill="none" stroke-dasharray="4,3"/>
+  <text class="wireLabel" x="288" y="290" fill="#808080">temp sense</text>
+
+  <!-- ============ COMPUTE SECTION (right side) ============ -->
+  <text x="600" y="100" class="sect">Compute</text>
+  <line x1="600" y1="108" x2="1370" y2="108" stroke="#f0b429" stroke-width="0.5"/>
+
+  <!-- Pi 5 -->
+  <rect class="comp" x="600" y="130" width="260" height="240" rx="8"/>
+  <text class="compLabel" x="730" y="155" text-anchor="middle">Raspberry Pi 5</text>
+  <text class="subLabel"  x="730" y="172" text-anchor="middle">Debian · Flask dashboard · SQLite</text>
+  <text class="subLabel"  x="730" y="186" text-anchor="middle">ML inference · systemd services</text>
+  <!-- Pi ports on right edge -->
+  <circle cx="860" cy="210" r="6" fill="#ec69a4"/>
+  <text class="wireLabel" x="874" y="214">CSI-0 (entrance cam)</text>
+  <circle cx="860" cy="234" r="6" fill="#ec69a4"/>
+  <text class="wireLabel" x="874" y="238">CSI-1 (inside cam)</text>
+  <circle cx="860" cy="258" r="6" fill="#ec69a4"/>
+  <text class="wireLabel" x="874" y="262">I²S (SPH0645 mic)</text>
+  <circle cx="860" cy="282" r="6" fill="#5aa8f0"/>
+  <text class="wireLabel" x="874" y="286">USB-CDC ← Pico</text>
+  <circle cx="860" cy="306" r="6" fill="#5aa8f0"/>
+  <text class="wireLabel" x="874" y="310">USB-serial ← RG-9 rain</text>
+  <circle cx="860" cy="330" r="6" fill="#ffffff"/>
+  <text class="wireLabel" x="874" y="334">GPIO23 (Pico reset)</text>
+  <!-- Pi power in -->
+  <circle cx="600" cy="200" r="6" fill="#e05b5b"/>
+  <text class="wireLabel" x="592" y="204" text-anchor="end">+5 V</text>
+  <circle cx="600" cy="220" r="6" fill="#000000" stroke="#f4e6c8" stroke-width="0.5"/>
+  <text class="wireLabel" x="592" y="224" text-anchor="end">GND</text>
+
+  <!-- Buck to Pi wiring -->
+  <path d="M170,360 L500,360 L500,200 L600,200" stroke="#e05b5b" stroke-width="3" fill="none"/>
+  <path d="M170,380 L490,380 L490,220 L600,220" stroke="#000000" stroke-width="3" fill="none"/>
+  <text class="wireLabel" x="330" y="355">+5 V (5 A)</text>
+  <text class="wireLabel" x="330" y="395">GND</text>
+
+  <!-- Pico -->
+  <rect class="comp" x="600" y="410" width="260" height="200" rx="8"/>
+  <text class="compLabel" x="730" y="435" text-anchor="middle">Raspberry Pi Pico 2</text>
+  <text class="subLabel"  x="730" y="452" text-anchor="middle">MicroPython real-time aggregator</text>
+  <text class="subLabel"  x="730" y="466" text-anchor="middle">JSON @ 1 Hz on USB-CDC</text>
+
+  <!-- Pico I/O ports on left -->
+  <circle cx="600" cy="490" r="6" fill="#ffff66"/>
+  <text class="wireLabel" x="592" y="494" text-anchor="end">I²C0 SDA (GP20)</text>
+  <circle cx="600" cy="510" r="6" fill="#7aa87a"/>
+  <text class="wireLabel" x="592" y="514" text-anchor="end">I²C0 SCL (GP21)</text>
+  <circle cx="600" cy="530" r="6" fill="#ffff66"/>
+  <text class="wireLabel" x="592" y="534" text-anchor="end">I²C1 SDA (GP16)</text>
+  <circle cx="600" cy="550" r="6" fill="#7aa87a"/>
+  <text class="wireLabel" x="592" y="554" text-anchor="end">I²C1 SCL (GP17)</text>
+  <circle cx="600" cy="570" r="6" fill="#b58ce0"/>
+  <text class="wireLabel" x="592" y="574" text-anchor="end">1-Wire (GP22)</text>
+
+  <!-- Pico I/O ports on right -->
+  <circle cx="860" cy="470" r="6" fill="#808080"/>
+  <text class="wireLabel" x="874" y="474">HX711 SCK (GP19)</text>
+  <circle cx="860" cy="490" r="6" fill="#ffffff"/>
+  <text class="wireLabel" x="874" y="494">HX711 DOUT (GP18)</text>
+  <circle cx="860" cy="510" r="6" fill="#ffffff"/>
+  <text class="wireLabel" x="874" y="514">IR gate A ×8 (GP0–7)</text>
+  <circle cx="860" cy="530" r="6" fill="#ffffff"/>
+  <text class="wireLabel" x="874" y="534">IR gate B ×8 (GP8–15)</text>
+  <circle cx="860" cy="550" r="6" fill="#a3743a"/>
+  <text class="wireLabel" x="874" y="554">Pack V (ADC2/GP28)</text>
+  <circle cx="860" cy="570" r="6" fill="#5aa8f0"/>
+  <text class="wireLabel" x="874" y="574">USB → Pi</text>
+
+  <!-- Pico power in -->
+  <circle cx="730" cy="410" r="6" fill="#e05b5b"/>
+  <text class="wireLabel" x="720" y="405" text-anchor="end">VBUS</text>
+
+  <!-- Pi to Pico USB (blue) -->
+  <path d="M860,282 C920,282 920,570 860,570" stroke="#5aa8f0" stroke-width="3" fill="none"/>
+
+  <!-- Pi 5V to Pico VBUS -->
+  <path d="M550,200 L550,410 L730,410" stroke="#e05b5b" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+  <text class="wireLabel" x="558" y="300">+5 V via USB</text>
+
+  <!-- ============ SENSORS SECTION (bottom) ============ -->
+  <text x="30" y="440" class="sect">Sensors on Pico</text>
+  <line x1="30" y1="448" x2="510" y2="448" stroke="#f0b429" stroke-width="0.5"/>
+
+  <!-- SHT41 -->
+  <rect class="sensor" x="30" y="470" width="130" height="50" rx="4"/>
+  <text class="compLabel" x="95" y="490" text-anchor="middle">SHT41</text>
+  <text class="subLabel"  x="95" y="506" text-anchor="middle">in-hive T/RH · I²C0 0x44</text>
+
+  <!-- BME280 -->
+  <rect class="sensor" x="180" y="470" width="130" height="50" rx="4"/>
+  <text class="compLabel" x="245" y="490" text-anchor="middle">BME280</text>
+  <text class="subLabel"  x="245" y="506" text-anchor="middle">outside T/RH/P · I²C0 0x76</text>
+
+  <!-- DS18B20 array -->
+  <rect class="sensor" x="330" y="470" width="180" height="50" rx="4"/>
+  <text class="compLabel" x="420" y="490" text-anchor="middle">DS18B20 × 4</text>
+  <text class="subLabel"  x="420" y="506" text-anchor="middle">brood/top temp probes · 1-Wire</text>
+
+  <!-- VEML7700 -->
+  <rect class="sensor" x="30" y="540" width="130" height="50" rx="4"/>
+  <text class="compLabel" x="95" y="560" text-anchor="middle">VEML7700</text>
+  <text class="subLabel"  x="95" y="576" text-anchor="middle">lux · I²C1 0x10</text>
+
+  <!-- SCD41 -->
+  <rect class="sensor" x="180" y="540" width="130" height="50" rx="4"/>
+  <text class="compLabel" x="245" y="560" text-anchor="middle">SCD41 (opt.)</text>
+  <text class="subLabel"  x="245" y="576" text-anchor="middle">CO₂ · I²C1 0x62</text>
+
+  <!-- SGP40 -->
+  <rect class="sensor" x="330" y="540" width="130" height="50" rx="4"/>
+  <text class="compLabel" x="395" y="560" text-anchor="middle">SGP40 (opt.)</text>
+  <text class="subLabel"  x="395" y="576" text-anchor="middle">VOC · I²C1 0x59</text>
+
+  <!-- HX711 + load cells -->
+  <rect class="sensor" x="30" y="610" width="180" height="80" rx="4"/>
+  <text class="compLabel" x="120" y="630" text-anchor="middle">HX711 + 4× 50 kg</text>
+  <text class="subLabel"  x="120" y="646" text-anchor="middle">Wheatstone-bridge load cells</text>
+  <text class="subLabel"  x="120" y="662" text-anchor="middle">hive weight (kg)</text>
+  <text class="subLabel"  x="120" y="678" text-anchor="middle">SHIELDED CAT6 → Pico</text>
+
+  <!-- Bee gate -->
+  <rect class="sensor" x="230" y="610" width="280" height="80" rx="4"/>
+  <text class="compLabel" x="370" y="630" text-anchor="middle">Bee Gate — 8 tunnels × 2 IR</text>
+  <text class="subLabel"  x="370" y="646" text-anchor="middle">Everlight ITR9606 slotted opto</text>
+  <text class="subLabel"  x="370" y="662" text-anchor="middle">direction inference (in/out/ambiguous)</text>
+  <text class="subLabel"  x="370" y="678" text-anchor="middle">counted on Pico PIO / IRQ</text>
+
+  <!-- Wires from Pico I²C0 (yellow+green) to SHT41 + BME280 -->
+  <path d="M600,490 L570,490 L570,495 L160,495" stroke="#ffff66" stroke-width="2" fill="none"/>
+  <path d="M600,510 L560,510 L560,498 L310,498" stroke="#7aa87a" stroke-width="2" fill="none"/>
+
+  <!-- Wires from Pico I²C1 to VEML7700, SCD41, SGP40 -->
+  <path d="M600,530 L540,530 L540,565 L460,565" stroke="#ffff66" stroke-width="2" fill="none"/>
+  <path d="M600,550 L530,550 L530,568 L460,568" stroke="#7aa87a" stroke-width="2" fill="none"/>
+
+  <!-- Wires from Pico 1-Wire to DS18B20 (purple) -->
+  <path d="M600,570 L520,570 L520,510 L510,510" stroke="#b58ce0" stroke-width="2" fill="none"/>
+
+  <!-- HX711 wires from Pico (white + grey) -->
+  <path d="M860,490 L880,490 L880,650 L210,650" stroke="#ffffff" stroke-width="2" fill="none"/>
+  <path d="M860,470 L890,470 L890,660 L210,660" stroke="#808080" stroke-width="2" fill="none"/>
+
+  <!-- Bee gate wires (white) -->
+  <path d="M860,510 L900,510 L900,650 L510,650" stroke="#ffffff" stroke-width="2" fill="none"/>
+  <path d="M860,530 L910,530 L910,660 L510,660" stroke="#ffffff" stroke-width="2" fill="none"/>
+
+  <!-- Pack voltage sense wire (brown) -->
+  <path d="M860,550 L920,550 L920,260 L450,260" stroke="#a3743a" stroke-width="2" fill="none"/>
+  <text class="wireLabel" x="880" y="410">pack V sense</text>
+
+  <!-- ============ PI-SIDE SENSORS ============ -->
+  <text x="900" y="440" class="sect">Sensors on Pi</text>
+  <line x1="900" y1="448" x2="1370" y2="448" stroke="#f0b429" stroke-width="0.5"/>
+
+  <rect class="sensor" x="900" y="470" width="200" height="60" rx="4"/>
+  <text class="compLabel" x="1000" y="492" text-anchor="middle">Pi Cam 3 (entrance)</text>
+  <text class="subLabel"  x="1000" y="510" text-anchor="middle">bee count + pollen · CSI-0</text>
+
+  <rect class="sensor" x="1120" y="470" width="200" height="60" rx="4"/>
+  <text class="compLabel" x="1220" y="492" text-anchor="middle">Pi Cam 3 NoIR (inside)</text>
+  <text class="subLabel"  x="1220" y="510" text-anchor="middle">timelapse · CSI-1 · 850 nm IR</text>
+
+  <rect class="sensor" x="900" y="550" width="200" height="60" rx="4"/>
+  <text class="compLabel" x="1000" y="572" text-anchor="middle">SPH0645 I²S mic</text>
+  <text class="subLabel"  x="1000" y="590" text-anchor="middle">audio · queenless/swarm FFT</text>
+
+  <rect class="sensor" x="1120" y="550" width="200" height="60" rx="4"/>
+  <text class="compLabel" x="1220" y="572" text-anchor="middle">Hydreon RG-9</text>
+  <text class="subLabel"  x="1220" y="590" text-anchor="middle">optical rain · UART/USB</text>
+
+  <!-- Pi wire lines -->
+  <path d="M866,210 L900,210 L900,470" stroke="#ec69a4" stroke-width="2" fill="none"/>
+  <path d="M866,234 L1120,234 L1120,470" stroke="#ec69a4" stroke-width="2" fill="none"/>
+  <path d="M866,258 L920,258 L920,550" stroke="#ec69a4" stroke-width="2" fill="none"/>
+  <path d="M866,310 L1120,310 L1120,550" stroke="#5aa8f0" stroke-width="2" fill="none"/>
+
+  <!-- ============ WIRE LEGEND ============ -->
+  <rect class="comp" x="30" y="720" width="1340" height="150" rx="6"/>
+  <text class="sect" x="45" y="745">Wire Color Legend</text>
+  <g font-size="12" fill="#f4e6c8">
+    <line x1="45" y1="765" x2="85" y2="765" stroke="#e05b5b" stroke-width="4"/>
+    <text x="92"  y="769">+5 V</text>
+
+    <line x1="200" y1="765" x2="240" y2="765" stroke="#f2933d" stroke-width="4"/>
+    <text x="247" y="769">+3.3 V</text>
+
+    <line x1="360" y1="765" x2="400" y2="765" stroke="#000000" stroke-width="4"/>
+    <text x="407" y="769">GND</text>
+
+    <line x1="500" y1="765" x2="540" y2="765" stroke="#ffff66" stroke-width="4"/>
+    <text x="547" y="769">I²C SDA</text>
+
+    <line x1="660" y1="765" x2="700" y2="765" stroke="#7aa87a" stroke-width="4"/>
+    <text x="707" y="769">I²C SCL</text>
+
+    <line x1="820" y1="765" x2="860" y2="765" stroke="#b58ce0" stroke-width="4"/>
+    <text x="867" y="769">1-Wire (DS18B20)</text>
+
+    <line x1="1020" y1="765" x2="1060" y2="765" stroke="#5aa8f0" stroke-width="4"/>
+    <text x="1067" y="769">UART / USB data</text>
+
+    <line x1="1220" y1="765" x2="1260" y2="765" stroke="#ffffff" stroke-width="4"/>
+    <text x="1267" y="769">GPIO / interrupt</text>
+
+    <line x1="45" y1="795" x2="85" y2="795" stroke="#808080" stroke-width="4"/>
+    <text x="92" y="799">PWM / clock (HX711 SCK)</text>
+
+    <line x1="300" y1="795" x2="340" y2="795" stroke="#a3743a" stroke-width="4"/>
+    <text x="347" y="799">Analog (ADC)</text>
+
+    <line x1="500" y1="795" x2="540" y2="795" stroke="#ec69a4" stroke-width="4"/>
+    <text x="547" y="799">I²S / CSI ribbon</text>
+  </g>
+
+  <text x="45" y="830" class="subLabel">Notes:</text>
+  <text x="45" y="847" class="subLabel">• Dashed grey line = analog control signal (NTC thermistor to MPPT temp input)</text>
+  <text x="45" y="862" class="subLabel">• All GND returns single-point to the Pi to avoid ground loops. Use silicone-insulated wire inside the hive; propolis attacks PVC.</text>
+</svg>

@@ -1,0 +1,15 @@
+[Unit]
+Description=Beehive rain sensor (Hydreon RG-9)
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=dialout
+WorkingDirectory=/home/pi/beehive-automation
+ExecStart=/usr/bin/python3 -m pi.services.rain_service --config /etc/beehive/config.yaml
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[Unit]
+Description=Beehive sensor ingest (Pico serial → SQLite)
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/beehive-automation
+ExecStart=/usr/bin/python3 -m pi.services.sensor_ingest --config /etc/beehive/config.yaml
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

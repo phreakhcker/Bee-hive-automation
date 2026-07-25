@@ -1,0 +1,60 @@
+# Copy to config/config.yaml and edit.  config.yaml is git-ignored.
+
+paths:
+  data_dir: /var/lib/beehive
+  db_path: /var/lib/beehive/hive.db
+  captures_dir: /var/lib/beehive/captures
+
+pico:
+  serial_port: /dev/ttyACM0     # Pico USB-CDC
+  reset_gpio: 23                # Pi -> Pico RUN
+  packet_timeout_s: 30          # if no packet for this long -> reset Pico
+
+cameras:
+  entrance:
+    enabled: true
+    camera_index: 0
+    fps: 15
+    resolution: [1920, 1080]
+    ring_buffer_seconds: 30
+    on_motion_save_seconds: 10
+    daily_capture_dir: true
+  inside:
+    enabled: true
+    camera_index: 1
+    timelapse_interval_s: 600   # every 10 min
+    resolution: [1920, 1080]
+    ir_led_gpio: null           # set a GPIO number if you switch IR LEDs
+
+audio:
+  enabled: true
+  device: "hw:0,0"              # I2S soundcard
+  sample_rate: 22050
+  channels: 1
+  chunk_seconds: 10
+  fft_bins_of_interest:
+    queenless_hz: [225, 250]    # elevated when queen absent
+    swarm_hz: [400, 800]        # elevated pre-swarm
+
+rain:
+  enabled: true
+  serial_port: /dev/ttyUSB0
+
+battery:
+  low_warn_v: 11.40
+  low_shutdown_v: 10.80
+  hard_cut_v: 9.90
+
+dashboard:
+  host: 0.0.0.0
+  port: 8080
+  history_default_hours: 24
+
+alerts:
+  enabled: false
+  webhook_url: ""               # e.g. Slack incoming webhook
+  triggers:
+    weight_drop_kg_per_hour: 2.0     # possible swarm/robbing
+    low_battery: true
+    queenless_hours: 12
+    hive_temp_out_of_range: [30, 38]

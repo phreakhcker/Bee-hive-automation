@@ -1,0 +1,15 @@
+[Unit]
+Description=Beehive dashboard (Flask)
+After=beehive-ingest.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/beehive-automation
+ExecStart=/usr/bin/python3 -m pi.dashboard.app --config /etc/beehive/config.yaml
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
