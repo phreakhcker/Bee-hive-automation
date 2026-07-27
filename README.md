@@ -134,8 +134,34 @@ Full BOM in [`hardware/BOM.md`](hardware/BOM.md); power system detail in [`docs/
 
 MIT — see [`LICENSE`](LICENSE). Do what you like, no warranty, don't blame me if a salvaged cell vents in your face.
 
-## Acknowledgements
+## Prior art & references
 
-- Sensor selection informed by [OSBeehives](https://opensourcebeehives.org/), [HiveTool](https://hivetool.org/), and [HiveEyes](https://community.hiveeyes.org/).
-- Bee-counter mechanical design inspired by [hydronics/BeeCounter](https://github.com/hydronics/BeeCounter).
-- Pollen classifier baseline: Rodriguez et al. 2018 & the Kaggle *Honey Bee Pollen* dataset.
+We audited the beehive-monitoring landscape before starting; the licensing picture matters because a commercial kit build is planned (see [`docs/dataset-permissions.md`](docs/dataset-permissions.md) for outreach in progress).
+
+### Cleared to build on
+
+| Project | License | Use |
+|---|---|---|
+| [BeeCam-AprilTag (Zenodo 13227905)](https://zenodo.org/records/13227905) | CC-BY-4.0 | Pi-side imaging pipeline reference — commercial OK with attribution |
+| [Ratnayake Polytrack2.0](https://github.com/malikaratnayake/Polytrack2.0) | MIT | Pollinator tracking code — permissive, safe to fork |
+
+### Reference only — NOT bundled (license blocks it)
+
+| Project | License | Why not |
+|---|---|---|
+| [Hiveeyes (kotori, terkin)](https://github.com/hiveeyes) | AGPL-3.0 | Network-triggered copyleft — would force our whole stack open |
+| [HoneyPi](https://github.com/Honey-Pi) | CC-BY-NC-SA / NC-ND | Non-commercial only |
+| [hydronics2 easy-bee-counter](https://github.com/hydronics2/2019-easy-bee-counter) | CERN-OHL v1.2 (HW) / no license (FW) | Firmware has no rights grant; hardware is copyleft |
+| [Mjrovai/Bee-Counting](https://github.com/Mjrovai/Bee-Counting) | GPL-3.0 | Viral copyleft; useful only if we go fully OSS |
+| Sensor selection informed by [OSBeehives](https://opensourcebeehives.org/), [HiveTool](https://hivetool.org/), [HiveEyes community](https://community.hiveeyes.org/) | — | Community docs — cited, no code reused |
+
+### Datasets
+
+| Dataset | License | Status |
+|---|---|---|
+| [Kaggle Honey Bee Pollen](https://www.kaggle.com/datasets/ivanfel/honey-bee-pollen) | CC-BY-SA-4.0 | R&D only — ShareAlike arguably viral on trained weights |
+| [PollenBee (HUST)](https://comvis-hust.github.io/datasets/pollenbee.html) | Not stated | Permission requested — see [`docs/dataset-permissions.md`](docs/dataset-permissions.md) |
+| [VnPollenBee (Nguyen et al. 2024)](https://www.sciencedirect.com/science/article/pii/S1574954124002863) | Not stated | Permission requested — same email |
+| [Bee Detection + Direction Dataset (Mendeley 8gb9r2yhfc)](https://data.mendeley.com/datasets/8gb9r2yhfc/5) | CC-BY-NC-ND-4.0 | Benchmarking only, cannot train shipping model |
+
+Long-term plan: collect our own labelled dataset from the prototype hive so the shipping pollen model has clean IP.
