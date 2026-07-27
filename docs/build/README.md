@@ -23,7 +23,9 @@ that check passes; downstream phases assume the previous ones work.
 | 04 | [Power stack bench build](04-power-stack.md) | 2 hr build + 1–2 wk burn-in | Phase 03A or 03B done |
 | 05 | [I²C sensors (SHT41, BME280, VEML7700, opt. SCD41/SGP40)](05-sensors-i2c.md) | ~2 hr | Phase 04 done |
 | 06 | [DS18B20 1-Wire temperature array](06-sensors-1wire.md) | ~1 hr | Phase 05 done |
-| 07+ | HX711, bee gate, cameras, audio, rain, enclosure, hive install | see later phases | Phases 01, 02, 04 done |
+| 07 | [HX711 + 4× load cells (hive weight)](07-weight.md) | ~3 hr | Phase 04 done |
+| 08 | [Bee-gate IR array (entrance counter)](08-bee-gate.md) | ~3–4 hr + print time | Phase 06 done |
+| 09+ | Cameras, audio, rain, enclosure, hive install | see later phases | Phases 01, 02, 04 done |
 
 **Pick 03A or 03B — you only do one.** Everything upstream (panel, MPPT,
 fuses, buck) and downstream (Pi rail, sensors) is identical either way.
