@@ -7,7 +7,7 @@ __pycache__/
 env/
 venv/
 .venv/
-build/
+/build/               # root-level Python setuptools output; docs/build/ is intentional
 dist/
 *.egg-info/
 .pytest_cache/
