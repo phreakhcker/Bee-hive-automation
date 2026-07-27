@@ -21,7 +21,9 @@ that check passes; downstream phases assume the previous ones work.
 | 03A | [Battery Option A — salvaged 18650](03-battery-A.md) | 2–3 weeks calendar | cell tester, ~40 candidate cells |
 | 03B | [Battery Option B — purchased LiFePO4](03-battery-B.md) | 30 min | packaged pack (see BOM) |
 | 04 | [Power stack bench build](04-power-stack.md) | 2 hr build + 1–2 wk burn-in | Phase 03A or 03B done |
-| 05+ | Sensors, cameras, audio, hive install | see later phases | Phases 01, 02, 04 done |
+| 05 | [I²C sensors (SHT41, BME280, VEML7700, opt. SCD41/SGP40)](05-sensors-i2c.md) | ~2 hr | Phase 04 done |
+| 06 | [DS18B20 1-Wire temperature array](06-sensors-1wire.md) | ~1 hr | Phase 05 done |
+| 07+ | HX711, bee gate, cameras, audio, rain, enclosure, hive install | see later phases | Phases 01, 02, 04 done |
 
 **Pick 03A or 03B — you only do one.** Everything upstream (panel, MPPT,
 fuses, buck) and downstream (Pi rail, sensors) is identical either way.
