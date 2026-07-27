@@ -2,7 +2,31 @@
 
 Read [`safety.md`](safety.md) first if you haven't.
 
-## Overview
+## Two battery options
+
+You have a choice for the battery half of the system. The rest of the stack
+(panel → MPPT → fuse → buck → Pi) is the same either way.
+
+| | **Option A — Salvaged 18650 (3S4P)** | **Option B — Purchased LiFePO4 pack (4S built-in BMS)** |
+|---|---|---|
+| Chemistry | Li-ion NMC (recovered vape/laptop cells) | LiFePO4 (lithium iron phosphate) |
+| Nominal V / range | 11.1 V / 9.0–12.6 V | 12.8 V / 10.0–14.6 V |
+| Usable energy | ~89 Wh (12 × ~2.2 Ah at 3.7 V) | 256 Wh (20 Ah at 12.8 V) |
+| Autonomy at ~5 W average load | ~18 hr | ~48 hr |
+| External BMS | Required (Daly 3S 20 A) | Built into the pack |
+| Cell testing / matching | Required — 40+ cells over 2–3 weeks | None |
+| Weight | ~600 g | ~2.5 kg |
+| Fire risk | Higher (recovered cells, less mature chemistry) | Lower (LiFePO4 is the safest common lithium chemistry) |
+| Winter behavior | Same NTC cutoff logic; smaller pack drains faster | Same NTC cutoff; larger pack rides through longer |
+| Cost | $30–70 (mostly the tester + BMS + holders) | $100–150 (the pack) plus the same MPPT/fuse/buck |
+| Right for | You already have salvage cells and want the practice | You want to bolt it together and get to the beekeeping |
+
+**Both options work with the same Victron 75/15 MPPT, same solar panel, same
+buck, and same Pico voltage-divider sensing.** Only the pack, the BMS
+requirement, and the Victron charge-profile settings differ. See the
+"Option B" section below for the deltas.
+
+## Overview (Option A — salvaged 3S)
 
 ```
      ┌──────────────┐
@@ -158,6 +182,129 @@ The important gap: **the software shutdown at 10.8 V happens well before the BMS
 The MPPT will resume charging as soon as pack voltage climbs. If cells got fully discharged, expect ~24 hours of good sun to fully refill an 89 Wh pack from ~9 V.
 
 Set a **rebulk hysteresis** of 0.4 V so the charger doesn't oscillate near the absorption voltage.
+
+## Option B — Purchased LiFePO4 pack (deltas from Option A)
+
+If you skip salvaged cells and buy a packaged 4S LiFePO4 with an integrated
+BMS, everything downstream of the pack terminals stays the same. The
+changes:
+
+### What you buy
+
+**Recommended pack — Bioenno BLF-1220A** (12 V 20 Ah LiFePO4, ~$130).
+Ham-radio community's default for solar/portable ops for a decade.
+Honest spec sheet, factory-direct support, US company. Ships from
+Bioenno or Powerwerx.
+
+Alternates (all built-in BMS, same nominal 12 V / ~13.6 V charge / 4S
+LiFePO4 chemistry — any of them work with the Victron):
+
+- **ExpertPower EP1220-20AH** — ~$100, Amazon, decent for the price.
+- **LiTime 12V 20Ah** — ~$70, Amazon, budget-brand, mass-market.
+- **Renogy 12V 20Ah** — ~$110, Renogy direct or Amazon, if you're
+  already buying the panel from them.
+
+Sizing note: 20 Ah gives ~2 days of autonomy under cloud. Bump to
+**30 Ah** if you're in a northern climate or want more winter margin.
+50 Ah is overkill for this load and adds weight + cost with no benefit.
+
+**Distributor honesty:** you asked for a Mouser/DigiKey link. Neither
+distributor stocks finished consumer LiFePO4 packs — they carry raw
+prismatic cells (EVE 3.2 V, Molicel) plus BMS boards, which is the
+same pack-build work as Option A with a different chemistry. If a
+DigiKey/Mouser sourcing chain is a hard requirement (e.g. corporate
+procurement), tell me and we'll design that variant, but for a
+hobbyist the specialty-battery distributors above are the right
+channel.
+
+### What you skip
+
+- ✂ **Daly 3S 20 A BMS** — the pack has one built in.
+- ✂ **Keystone 1042 holders** — not needed, no cell assembly.
+- ✂ **Pure nickel strip** — not needed.
+- ✂ **Opus BT-C3100 tester** — not needed unless you also want it for
+  general Li-ion work.
+- ✂ **Weeks of cell triage + burn-in on the 18650s.** The pack ships
+  balanced and tested.
+
+### What changes in the wiring diagram
+
+```
+     ┌──────────────┐
+     │  100 W Solar │
+     └──────┬───────┘
+            │
+            ▼
+   ┌────────────────────────┐          10 kΩ NTC (optional here — the
+   │ Victron SmartSolar     │◀───────── pack BMS also does low-T cutoff,
+   │ MPPT 75/15             │          but NTC on MPPT is a second layer)
+   │  • LiFePO4 preset      │
+   │  • absorption 14.20 V  │
+   │  • float 13.50 V       │
+   └───────────┬────────────┘
+               │
+               ▼
+      ┌─────[ANL 20 A]───┐   ◀── fuse (bump from 15 A because 20 Ah
+               │                     pack can source higher inrush)
+               ▼
+   ┌────────────────────────┐
+   │ 12 V 20 Ah LiFePO4     │  10.0–14.6 V range
+   │ pack (BMS INTERNAL)    │  Pack does its own cell balancing +
+   │                        │  over/under-voltage cutoff
+   └───────────┬────────────┘
+               │
+               ▼
+      ┌─────[ATO 10 A]───┐   ◀── load fuse (unchanged)
+               │
+      (rest of stack unchanged — buck, Pi, Pico ADC divider)
+```
+
+### What changes in the Victron config
+
+Replace the Option A settings table with these:
+
+| Setting | Value | Why |
+|---|---|---|
+| Battery preset | **LiFePO4** (built-in) | The 75/15 has this preset in firmware ≥ v1.50 |
+| Absorption voltage | **14.20 V** | 3.55 V/cell — standard LiFePO4 |
+| Float voltage | **13.50 V** | 3.375 V/cell — safe idle for LiFePO4 |
+| Absorption time | 2 hr (preset default) | Allows the internal BMS time to balance |
+| Equalization | Disabled | Never for lithium |
+| Charge current limit | 15 A (or panel-limited) | LiFePO4 tolerates full C-rate; no need to derate |
+| Temperature compensation | 0 mV/°C | Lithium doesn't want lead-acid temp comp |
+| Battery temperature sense | Enabled, via NTC | Redundant with pack BMS but harmless |
+| Low temperature cutoff | 5 °C (charge disabled) | LiFePO4 also degrades if charged below 0 °C |
+| Rebulk voltage offset | 0.4 V | Standard |
+
+If your Victron's firmware is old and doesn't show a LiFePO4 preset,
+update via VictronConnect first — free, over Bluetooth.
+
+### What changes in the software cutoffs
+
+The Pi's `shutdown_guard.py` thresholds shift because LiFePO4 sits at
+a different voltage. Edit `pi/services/shutdown_guard.py`:
+
+| Layer | Option A (3S Li-ion) | Option B (4S LiFePO4) |
+|---|---|---|
+| Software warning | 11.4 V | **12.5 V** |
+| Software graceful shutdown | 10.8 V | **11.8 V** |
+| Software hard cutoff | 9.9 V | **11.0 V** |
+| BMS UVP | ~9.0 V | **~10.0 V** (pack internal) |
+
+The Pico voltage-divider (100 kΩ / 22 kΩ) is safe as-is: max pack
+voltage 14.6 V × (22 / 122) = 2.63 V, comfortably below the Pico's
+3.3 V ADC ceiling.
+
+### What stays the same
+
+- Same 100 W Renogy panel, same MC4 cabling, same MPPT.
+- Same Pololu D36V50F5 buck, same 5 V rail to Pi.
+- Same 10 A ATO load fuse.
+- Same enclosure layout, same NTC probe placement, same rain sealing.
+- Same insulation strategy for cold-weather deployment.
+- **Bench burn-in still recommended** — even a factory pack should
+  run on your bench for a week before it goes on the hive, so any
+  DOA / infant-mortality shows up where you can return it.
 
 ## Winter behavior
 

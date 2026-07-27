@@ -1,8 +1,8 @@
 # Bee Hive Automation
 
-An open, off-grid monitoring & automation system for a Langstroth beehive, built around a Raspberry Pi 5 and a Raspberry Pi Pico. Powered by salvaged 18650 cells (from disposable vapes) with a smart BMS and solar charging.
+An open, off-grid monitoring & automation system for a Langstroth beehive, built around a Raspberry Pi 5 and a Raspberry Pi Pico. Solar-powered, with two supported battery paths — salvaged 18650 cells + smart BMS (**Option A**), or a purchased 12 V LiFePO4 pack with built-in BMS (**Option B**). Pick whichever fits your appetite for battery-pack work.
 
-> **Safety note up front:** this project handles Li-ion cells outdoors and off-grid. Read [`docs/safety.md`](docs/safety.md) before you assemble the power system. Salvaged vape cells are viable but non-trivial — they must be individually tested, matched, and monitored.
+> **Safety note up front:** this project handles lithium cells outdoors and off-grid. Read [`docs/safety.md`](docs/safety.md) before you assemble the power system. Option A (salvaged Li-ion) is viable but non-trivial — cells must be individually tested, matched, and monitored. Option B (LiFePO4) is much safer and simpler but still deserves respect.
 
 ---
 
@@ -49,14 +49,16 @@ Full details in [`docs/architecture.md`](docs/architecture.md).
 
 ## Power
 
-| | |
-|---|---|
-| Cells | 12× matched salvaged 18650 (**3S4P**, ~11.1 V nominal) |
-| BMS | Daly 3S 20 A smart BMS (Bluetooth telemetry) |
-| Panel | Renogy 100 W 12 V monocrystalline |
-| Charge controller | Victron SmartSolar MPPT 75/15 (Li-ion profile, absorption capped at **12.30 V = 4.10 V/cell** for cycle life) |
-| Buck | Pololu D36V50F5 → 5 V @ 5 A → Pi 5 |
-| Protection | ANL 15 A pack fuse, ATO 10 A load fuse, 10 k NTC on battery temp → charger disable below 0 °C |
+Two supported battery paths — pick one; everything else stays the same.
+
+| | **Option A — Salvaged 18650** | **Option B — Purchased LiFePO4** |
+|---|---|---|
+| Pack | 12× matched salvaged 18650, **3S4P**, ~11.1 V nominal | Bioenno BLF-1220A (or equiv.), 12 V 20 Ah LiFePO4 |
+| BMS | Daly 3S 20 A smart BMS (Bluetooth telemetry) | Built into pack |
+| Effort | Weeks of cell testing + matching + bench burn-in | Bolt it together |
+| Chemistry safety | Li-ion NMC — needs the whole safety protocol | LiFePO4 — safest common lithium chemistry |
+| **Common to both:** | Renogy 100 W panel · Victron SmartSolar MPPT 75/15 · Pololu D36V50F5 buck (5 V @ 5 A) · ANL pack fuse · ATO 10 A load fuse · 10 kΩ NTC on battery temp → charger low-temp cutoff | ← same |
+| Victron preset | Li-ion, absorption **12.30 V** / float 12.10 V | LiFePO4, absorption **14.20 V** / float 13.50 V |
 
 Full BOM in [`hardware/BOM.md`](hardware/BOM.md); power system detail in [`docs/power-system.md`](docs/power-system.md); wiring in [`diagrams/`](diagrams/).
 

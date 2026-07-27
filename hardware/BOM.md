@@ -63,7 +63,10 @@ All prices approximate (USD, late-2026 street prices). Every item has 2–3 purc
 | **Hydreon RG-9 optical rain sensor** | 1 | $49 | [Direct — rainsensors.com](https://rainsensors.com/products/rg-9/) — genuine only |
 | **FT232RL / CH340 USB-serial breakout** — for RG-9 (or use Pi UART instead) | 1 | $8 | [Amazon 2-pack](https://www.amazon.com/s?k=FT232RL+USB+TTL+serial+converter+type-C) · [AliExpress](https://www.aliexpress.us/w/wholesale-FT232RL+USB+TTL.html) |
 
-## Power system — cells & testing
+## Battery — Option A (salvaged 18650 pack, requires external BMS)
+
+Pick this block **OR** the "Option B" block below — not both. See
+[`docs/power-system.md`](../docs/power-system.md) for the trade-off.
 
 | Item | Qty | ~Price | Buy from |
 |---|---:|---:|---|
@@ -72,18 +75,44 @@ All prices approximate (USD, late-2026 street prices). Every item has 2–3 purc
 | **Keystone 1042 4-cell 18650 holder with solder tabs** | 3 | $3 ea | [DigiKey #1042](https://www.digikey.com/en/products/detail/keystone-electronics/1042/2137907) · [Mouser #1042](https://www.mouser.com/ProductDetail/Keystone-Electronics/1042) · [Amazon](https://www.amazon.com/s?k=Keystone+1042+18650+4-cell+holder) |
 | **Pure nickel strip 0.15 × 8 mm, 1 m** — parallel-group interconnects | 1 | $8 | [Vruzend](https://vruzend.com/product/pure-nickel-strip/) · [Amazon (magnet test on arrival)](https://www.amazon.com/s?k=pure+nickel+strip+0.15+8mm) |
 
+## Battery — Option B (purchased LiFePO4 pack, BMS built in)
+
+Pick this block **OR** the "Option A" block above. This drops the
+Opus tester, the cells, the holders, the nickel strip, and the Daly
+BMS from the parts list. Also change the ANL fuse below from 15 A to
+**20 A** because the pack sources higher inrush.
+
+| Item | Qty | ~Price | Buy from |
+|---|---:|---:|---|
+| **Bioenno BLF-1220A** — 12 V 20 Ah LiFePO4, built-in BMS (**recommended**) | 1 | $130 | [Bioenno direct](https://www.bioennopower.com/products/12v-20ah-lfp-battery) · [Powerwerx](https://powerwerx.com/bioenno-blf-1220a-12v-20ah-lithium-iron-pvc) |
+| — or — **ExpertPower EP1220-20AH** (budget alt., built-in BMS) | 1 | $100 | [ExpertPower direct](https://www.expertpower.us/products/ep1220-20ah) · [Amazon](https://www.amazon.com/s?k=ExpertPower+EP1220+20Ah+LiFePO4) |
+| — or — **LiTime 12V 20Ah LiFePO4** (cheapest, mass-market) | 1 | $70 | [Amazon (LiTime storefront)](https://www.amazon.com/s?k=LiTime+12V+20Ah+LiFePO4) · [LiTime direct](https://www.litime.com/collections/12v-lithium-batteries) |
+| — or — **Renogy 12 V 20 Ah** — if you're already buying Renogy panel | 1 | $110 | [Renogy direct](https://www.renogy.com/products/12v-20ah-trolling-motor-lithium-iron-phosphate-battery) · [Amazon](https://www.amazon.com/s?k=Renogy+12V+20Ah+LiFePO4) |
+
+**Sourcing note:** Mouser and DigiKey do not stock finished consumer
+LiFePO4 packs — they carry raw prismatic cells (EVE 3.2 V, Molicel)
+plus BMS boards, which is a build-your-own-pack path and effectively
+just Option A with a different chemistry. If you specifically need
+distributor-catalog parts (e.g. corporate procurement) tell me and
+we'll design that variant. For most builders, the specialty-battery
+retailers above are the right channel.
+
+**Sizing:** 20 Ah is the sweet spot (~2 days autonomy under cloud).
+Bump to 30 Ah in a northern climate for more winter margin — same
+brands all offer it.
+
 ## Power system — protection & charging
 
 | Item | Qty | ~Price | Buy from |
 |---|---:|---:|---|
-| **Daly 3S 20 A smart BMS w/ Bluetooth** | 1 | $28 | [Overkill Solar (US, firmware-vetted)](https://www.overkillsolar.com/) · [Amazon](https://www.amazon.com/s?k=Daly+3S+20A+Smart+BMS+Bluetooth+12V) · [AliExpress Daly Official Store](https://www.aliexpress.us/w/wholesale-Daly-3S-20A-Smart-BMS-Bluetooth.html) |
+| **Daly 3S 20 A smart BMS w/ Bluetooth** — **Option A only** (Option B pack has BMS built in) | 1 | $28 | [Overkill Solar (US, firmware-vetted)](https://www.overkillsolar.com/) · [Amazon](https://www.amazon.com/s?k=Daly+3S+20A+Smart+BMS+Bluetooth+12V) · [AliExpress Daly Official Store](https://www.aliexpress.us/w/wholesale-Daly-3S-20A-Smart-BMS-Bluetooth.html) |
 | **SEFUSE SF77E thermal fuse (77 °C, one-shot)** | 1 | $2 | [Mouser (search SF77E)](https://www.mouser.com/c/?q=SEFUSE%20SF77E) · [DigiKey](https://www.digikey.com/en/products/result?keywords=SF77E) |
 | **10 kΩ NTC thermistor, potted probe** — battery temp sense | 1 | $3 | [Amazon](https://www.amazon.com/s?k=10K+NTC+thermistor+potted+probe+waterproof) · [AliExpress](https://www.aliexpress.us/w/wholesale-10K-NTC-thermistor-waterproof-probe.html) |
 | **Renogy 100 W 12 V monocrystalline rigid panel** | 1 | $80 | [Renogy direct](https://www.renogy.com/pages/100w-monocrystalline-solar-rigid-panels-compact-design-rng-100d-ss-html) · [Amazon (Renogy storefront)](https://www.amazon.com/s?k=Renogy+100W+12V+monocrystalline+rigid+solar+panel) |
 | **10 AWG MC4 solar cable pair, 3 m** | 1 | $12 | [Renogy MC4 kits](https://www.renogy.com/solar-adaptor-kit-mc4/) · [Amazon (UL-4703 marking)](https://www.amazon.com/s?k=10+AWG+MC4+solar+cable+3m+pair) |
 | **Victron SmartSolar MPPT 75/15** — CRITICAL: authorized dealers only | 1 | $110 | [EcoDirect](https://www.ecodirect.com/Victron-Energy-SmartSolar-75-15-Charge-Controller-p/victron-energy-ss-mppt-75-15.htm) · [Dakota Lithium](https://dakotalithium.com/product/victron-smartsolar-mppt-75-15-solar-charge-controller/) · [EXPLORIST.life](https://shop.explorist.life/shop/all-products/victron-smartsolar-mppt-7515/) · **NEVER AliExpress** |
 | **Pololu D36V50F5** (5 V, 5.5 A synchronous buck) — main 5 V rail | 1 | $30 | [Pololu #4091](https://www.pololu.com/product/4091) |
-| **ANL 15 A fuse + inline holder** | 1 | $10 | [Amazon](https://www.amazon.com/s?k=ANL+15A+fuse+holder+inline) · [AliExpress](https://www.aliexpress.us/w/wholesale-ANL-15A-fuse-holder.html) |
+| **ANL fuse + inline holder** — 15 A for Option A, **20 A for Option B** | 1 | $10 | [Amazon (15 A / 20 A)](https://www.amazon.com/s?k=ANL+fuse+holder+inline+12V) · [AliExpress](https://www.aliexpress.us/w/wholesale-ANL-fuse-holder.html) |
 | **ATO/ATC 10 A fuse + inline holder** — load-side | 1 | $5 | [DigiKey (Littelfuse ATO)](https://www.digikey.com/en/products/filter/automotive-fuses/141) · [Amazon](https://www.amazon.com/s?k=ATO+ATC+10A+fuse+inline+holder+12AWG) |
 
 ## Wiring
@@ -128,14 +157,21 @@ All prices approximate (USD, late-2026 street prices). Every item has 2–3 purc
 
 ## Totals (order-of-magnitude)
 
-| Bucket | ~$ |
-|---|---:|
-| Compute (Pi 5 + Pico + SD + PSU) | $95 |
-| Sensors (excluding optional CO₂/VOC/rain) | $200 |
-| Sensors (all optional included) | $330 |
-| Power system (incl. cell tester) | $400 |
-| Enclosures + wiring + chemistry | $150 |
-| **Base total (minimum viable)** | **~$800** |
-| **Fully loaded** | **~$1,000** |
+| Bucket | Option A (salvaged 18650) | Option B (LiFePO4 pack) |
+|---|---:|---:|
+| Compute (Pi 5 + Pico + SD + PSU) | $95 | $95 |
+| Sensors (excluding optional CO₂/VOC/rain) | $200 | $200 |
+| Sensors (all optional included) | $330 | $330 |
+| Battery + protection + charging | ~$400 (incl. Opus tester, BMS, cells if bought new) | ~$350 (pack + MPPT + fuses; no tester, no BMS, no cells) |
+| Enclosures + wiring + chemistry | $150 | $150 |
+| **Base total (minimum viable)** | **~$800** | **~$750** |
+| **Fully loaded** | **~$1,000** | **~$950** |
 
-The two components where I'd never cut costs: **Victron MPPT** (a fake will cook cells or fail dangerously) and **Opus BT-C3100** (clones over-report capacity, letting bad cells through the testing pipeline).
+**Option B is not dramatically cheaper up front** — you skip the tester and
+BMS but pay for a finished pack. Where it wins is time (weeks of cell
+triage → gone) and safety margin.
+
+The one component where I'd never cut costs regardless of battery choice:
+**Victron MPPT** (a fake will cook cells or fail dangerously). For Option A
+add the **Opus BT-C3100** to that list — clones over-report capacity and
+let bad cells through the testing pipeline.
